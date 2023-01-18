@@ -1,0 +1,58 @@
+#include <iostream>
+
+using namespace std;
+struct Node{
+    int data;
+    Node*left;
+    Node* right;
+    Node(int a){
+        data = a;
+        left = NULL;
+        right=NULL;
+        
+    }
+};
+Node* insert(struct Node* node, int data)
+{
+
+	/* 1. If the tree is empty, return a new,
+	single node */
+	if (node == NULL)
+		Node* temp= new Node(data);
+	else {
+
+		/* 2. Otherwise, recur down the tree */
+		if (data <= node->data)
+			node->left = insert(node->left, data);
+		else
+			node->right = insert(node->right, data);
+
+		/* return the (unchanged) node pointer */
+		return node;
+	}
+}
+
+// Function to return the minimum node
+// in the given binary search tree
+int maxValue(struct Node* node)
+{
+	if (node->right == NULL)
+		return node->data;
+	return maxValue(node->right);
+}
+     int main()
+{
+
+	// Create the BST
+	struct Node* root = NULL;
+	root = insert(root, 4);
+	insert(root, 2);
+	insert(root, 1);
+	insert(root, 3);
+	insert(root, 6);
+	insert(root, 5);
+
+	cout <<maxValue(root);
+
+	return 0;
+}

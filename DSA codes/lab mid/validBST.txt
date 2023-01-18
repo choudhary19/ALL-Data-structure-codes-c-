@@ -1,0 +1,67 @@
+#include <iostream>
+
+using namespace std;
+struct Node{
+    int data;
+    Node*left;
+    Node* right;
+    Node(int a){
+        data = a;
+        left = NULL;
+        right=NULL;
+        
+    }
+};
+Node* insert(struct Node* node, int data)
+{
+
+	/* 1. If the tree is empty, return a new,
+	single node */
+	if (node == NULL)
+		Node* temp= new Node(data);
+	else {
+
+		/* 2. Otherwise, recur down the tree */
+		if (data <= node->data)
+			node->left = insert(node->left, data);
+		else
+			node->right = insert(node->right, data);
+
+		/* return the (unchanged) node pointer */
+		return node;
+	}
+}
+ bool validBST( Node* root, Node* max=NULL,Node* min=NULL){
+       if(min!=0 && root->data<=min->data){
+           return false;
+       }
+       if(max!=0 && root->data >= max->data){
+           return false;
+       }
+       bool validlift= validBST(root->left,min,root);
+        bool validright= validBST(root->right,root,max);
+        return validlift and validright;
+
+ }
+ int main()
+ {
+    struct Node* root = NULL;
+	root = insert(root, 4);
+	insert(root, 2);
+	insert(root, 1);
+	insert(root, 3);
+	insert(root, 6);
+	insert(root, 5);
+	
+      if(validBST(root,NULL,NULL))
+      {
+        cout<< " valid BSt ";
+
+      }
+      else{
+           cout<< " INvalid BSt ";
+      }
+
+
+
+ }
